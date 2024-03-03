@@ -3,8 +3,9 @@
 - [Mediapipe](https://developers.google.com/mediapipe/solutions/vision/pose_landmarker)
 
 ## Installation Steps
-1. install Mediapip
-`$ python -m pip install mediapipe`
+### Install Mediapip
+
+`$ py -m pip install mediapipe`
 
 
 
