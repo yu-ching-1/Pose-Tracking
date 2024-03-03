@@ -1,0 +1,1 @@
+Pose tracking is an implementation of Pose Landmark Detection from MediaPipe Studio in a Python environment. The application environment would be for aging-in-place.
