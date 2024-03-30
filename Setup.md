@@ -1,36 +1,53 @@
+<style>
+    keyword
+    {
+        color:green;
+        background:lightgreen;
+        font-style:italic
+    }
+</style>
 ## Used Tools
-- Python v3.11 with pip v24
+- [Python v3.11.8](https://www.python.org/downloads/release/python-3118/) with pip v24
 - [Mediapipe](https://developers.google.com/mediapipe/solutions/vision/pose_landmarker)
-- IDE VS Code
-- opencv-python 4.9
+- IDE [VS Code](https://code.visualstudio.com/Download) v1.87
+- opencv-python v4.9(download via pip)
 
 ## Installation Steps
 
-### Create a new Conda
-Open the Command Pelette  <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>
+### Create a New Conda
+Open the Command Palette  <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>
 
-Search for *Python: Create Environment*
+Search for <keyword>Python: Create Environment</keyword>
 
-Choose enviroment type *Conda*
+Choose environment type <keyword>Conda</keyword>
 
-Use *Python 3.11* for this project
+Use <keyword>Python 3.11.8</keyword> for this project
 
-### Selete the created Conda as Python interpreter
-Open the Command Pelette  <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>
+### Select the Created Conda as Python Interpreter
+Open the Command Palette  <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>P</kbd>
 
-Search for *Python: Select Interpreter*
+Search for <keyword>Python: Select Interpreter</keyword>
 
 Choose the Conda we created in previous step 
 ### Install Mediapip
 ```
 $ py -m pip install mediapipe
 ```
+For using the pose detection package, it requires you to download the models and store in a local path.
 ### Install Opencv-python
 ```
 $ py -m pip install opencv-python
 ```
+### Install Unity
+Download and install [Unity Hub](https://unity.com/download)
 
-## Refrence Commands
+Open Unity Hub
+
+ - Install Editor v2022.3.21f1
+ - Add a new project
+ - Open **Window** -> **Package** and make sure the version of <keyword>visual studio editor</keyword> is above 2.0.20
+- Open **Edit** -> **Preference** and set the <keyword>External Script Editor</keyword> in External Tool as <keyword>Visual Studio Code</keyword> 
+## Reference Commands
 - Export conda environment
 ```
 conda env export > environment.yml

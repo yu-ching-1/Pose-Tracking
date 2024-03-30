@@ -3,8 +3,11 @@ import numpy as np
 import cv2
 import time
 import threading
+import socket
+
 import configuration as cfg
 import global_vars as gv
+import socket_upd
 
 from mediapipe.framework.formats import landmark_pb2
 from mediapipe import solutions
@@ -17,7 +20,7 @@ class CaptureThread(threading.Thread):
     isRunning = False
 
     def run(self) -> None:
-        if cfg.DEBUG_MODE: print('opening cameera...')
+        if cfg.DEBUG_MODE: print('opening camera...')
         self.cap = cv2.VideoCapture(cfg.CAM_INDEX,cv2.CAP_DSHOW)
         self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT,cfg.CAM_HEIGHT)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,cfg.CAM_WIDTH)
@@ -66,7 +69,7 @@ class DetectionThread(threading.Thread):
             
             if cfg.DISPLAY_STREAM:
                 
-                style = self.set_landmarks_style(cfg.LMKER_THICKNESS,cfg.LMKER_RADIUS,cfg.LMKER_LEFT,cfg.LMKER_RIGHT)
+                style = self.set_landmarks_style(cfg.LMK_THICKNESS,cfg.LMK_RADIUS,cfg.LMK_LEFT,cfg.LMK_RIGHT)
                 solutions.drawing_utils.draw_landmarks(
                 annotated_img,
                 pose_landmarks_proto,
@@ -83,26 +86,44 @@ class DetectionThread(threading.Thread):
     )
         capture = CaptureThread()
         capture.start()
-    
+
+        upd = socket_upd.UdpThread()
+        if cfg.BROADCAST: upd.start()
+
+
+        #communication
+        if cfg.BROADCAST:
+            sock = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+            server_address_port =(cfg.UDP_ADDRESS,cfg.UDP_PORT)
+        
         with self.vision.PoseLandmarker.create_from_options(options) as landmarker:
             
-            print('Waiting for camera...')
-            while gv.RUNNING and not capture.isRunning:
-                   
-                   time.sleep(0.5)
+            print('Waiting for camera...',end='')
+            while gv.RUNNING and not capture.isRunning: 
+                print('.',end='')
+                time.sleep(0.1)
             
-            print('Camera opened')
+            print('\nCamera opened')
 
             while gv.RUNNING and capture.cap.isOpened():
                 img = capture.frame
                 mp_img = mp.Image(image_format=mp.ImageFormat.SRGB,data = img)
                 results = landmarker.detect(mp_img)
                 annotated_img, n_result = self.draw_landmark_on_image(mp_img.numpy_view(),results)
-                
-                if cfg.DEBUG_MODE: print(n_result)
+
+                ## set the landmarks based on world coordinate when it detects a pose
+                if len(results.pose_world_landmarks) > 0& cfg.BROADCAST:
+                    upd.landmarks = results.pose_world_landmarks[0]
+                    
+                if cfg.DEBUG_MODE:
+                    count = 0 
+                    for re in n_result.landmark:
+                        print(f"Landmark #{count}\n{re}")
+                        count = count +1
+
                 if cfg.DISPLAY_STREAM:
                     cv2.imshow('Pose Detection',annotated_img)
-                    cv2.waitKey(5)
+                    cv2.waitKey(1)
 
 
         return super().run()
