@@ -47,6 +47,11 @@ Open Unity Hub
  - Add a new project
  - Open **Window** -> **Package** and make sure the version of <keyword>visual studio editor</keyword> is above 2.0.20
 - Open **Edit** -> **Preference** and set the <keyword>External Script Editor</keyword> in External Tool as <keyword>Visual Studio Code</keyword> 
+
+## Unity Tutor
+- Source: This [video](https://youtu.be/RQ-2JWzNc6k?si=Nk6mlM9eXPqGsdWP) is very helpful for beginner of Unity. It used object  **Line** between landmarks which I changed it to **Cylinder** for better practice of rigid body transform calculation.  
+
+
 ## Reference Commands
 - Export conda environment
 ```
