@@ -6,7 +6,7 @@ public class LandmarkTracking : MonoBehaviour
 {
     public UdpReceiver UdpReceiver;
     public GameObject[] Landmarks;
-    public GameObject[] Head;
+    // public GameObject[] Head;
     public bool IsPrintToConsole = true;
 
     // Start is called before the first frame update
@@ -32,21 +32,27 @@ public class LandmarkTracking : MonoBehaviour
         int index = 0;
         float x = float.Parse(points[index*3]);
         float y = float.Parse(points[index*3+1]);
+    
+        y = -y;
         float z = float.Parse(points[index*3+2]);
         
 
-        // Head - set landmark #0 as center of head
-        Head[0].transform.position = new Vector3(x,y,z);
-        if (IsPrintToConsole) print("landmark #"+ index+" "+new Vector3(x,y,z));
+        // // Head - set landmark #0 as center of head
+        // Head[0].transform.position = new Vector3(x,y,z);
+        // if (IsPrintToConsole) print("landmark #"+ index+" "+new Vector3(x,y,z));
 
         for (int i = 0;i<Landmarks.Length;i++)
         {
-            index = i+11;
+            index = i;
          
             x = float.Parse(points[index * 3]);
+            x*=2;
             y = float.Parse(points[index * 3 + 1]);
+            y = -2*y;
+            
+            //TODO: check the original point and x,y,z direction from Mediapip
             z = float.Parse(points[index * 3 + 2]);
-          
+            z = -2*z;
             Landmarks[i].transform.localPosition = new Vector3(x,y,z);
             if (IsPrintToConsole) print("landmark #"+ index+" "+new Vector3(x,y,z));
         }
