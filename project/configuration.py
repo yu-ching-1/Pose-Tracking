@@ -9,7 +9,7 @@ MODEL_PATH_FULL = ''
 MODEL_PATH_HEAVY = 'c:/Users/YuChi/Documents/GitHub/Pose-Tracking/project/model/pose_landmarker_heavy.task'
 
 # Camera Setting
-CAM_INDEX = 0
+CAM_INDEX = 1
 CAM_WIDTH = 480
 CAM_HEIGHT = 480
 CAM_FPS = 60
@@ -21,7 +21,7 @@ DISPLAY_STREAM = True
 #Communication with Unity
 BROADCAST = True
 UDP_ADDRESS = '127.0.0.1' #local host
-UDP_PORT = 5024
+UDP_PORT = 5054
 
 # Landmark Style
 LMK_THICKNESS = 2

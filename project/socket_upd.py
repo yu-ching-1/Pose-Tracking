@@ -22,8 +22,7 @@ class UdpThread(threading.Thread):
                     lmlist.append(lm.x)
                     lmlist.append(lm.y)
                     lmlist.append(lm.z)
-                  
-             
+                
                 sock.send(str.encode(str(lmlist)))
            
                 self.landmarks = []

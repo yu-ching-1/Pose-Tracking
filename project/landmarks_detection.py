@@ -114,6 +114,8 @@ class DetectionThread(threading.Thread):
                 ## set the landmarks based on world coordinate when it detects a pose
                 if len(results.pose_world_landmarks) > 0& cfg.BROADCAST:
                     upd.landmarks = results.pose_world_landmarks[0]
+                    # upd.landmarks = results.pose_landmarks[0]
+
                     
                 if cfg.DEBUG_MODE:
                     count = 0 
